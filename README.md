@@ -82,7 +82,7 @@ Please replace the placeholder with your own bucket name for the policy to work 
 dbt build --target prod
 ```
 
-5. After you've updated the files for `TODO`s, commit your changes and push to your remote repository
+5. After you've updated the files for `TODO`s, commit your changes and push to your remote repository 
 
 
 6. Run the below to switch branches and test your CI pipelines
@@ -99,4 +99,4 @@ dbt build
 
 8. See your CI pipeline run and test your changes in your pull request
 
-9. Merge the pull request and watch as your changes are deployed to production and your staging schema is cleaned up
+9. Merge the pull request and watch as your changes are deployed to production and your staging schema is cleaned up 
