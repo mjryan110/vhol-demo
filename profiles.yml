@@ -1,25 +1,22 @@
 vhol_demo:
   target: dev
-  # TODO: update the following to your Snowflake account
   outputs:
     dev:
-      type: snowflake
-      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
-      user: "{{ env_var('SNOWFLAKE_USER') | as_text }}"
-      password: "{{ env_var('SNOWFLAKE_PASSWORD') | as_text }}"
-      role: DEMO_ROLE
-      database: DEMO
-      warehouse: INTEGRATION
-      schema: "{{ env_var('SNOWFLAKE_SCHEMA') | as_text }}"
+      type: postgres
+      host: datafold-project.crbugiiu4j6r.us-east-1.rds.amazonaws.com
+      port: 5432
+      database: postgres
+      user: postgres
+      password: Training
+      schema: public
       threads: 24
 
     prod:
-      type: snowflake
-      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
-      user: "{{ env_var('SNOWFLAKE_USER') | as_text }}"
-      password: "{{ env_var('SNOWFLAKE_PASSWORD') | as_text }}"
-      role: DEMO_ROLE
-      database: DEMO
-      warehouse: INTEGRATION
-      schema: CORE
+      type: postgres
+      host: datafold-project.crbugiiu4j6r.us-east-1.rds.amazonaws.com
+      port: 5432
+      database: postgres
+      user: postgres
+      password: Training
+      schema: public
       threads: 24
