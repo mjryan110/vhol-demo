@@ -29,8 +29,8 @@ jobs:
       - name: install requirements
         run: pip install -q -r requirements.txt
 
-      - name: dbt deps
-        run: dbt deps
+      # - name: dbt deps
+      #   run: dbt deps
 
       - name: Find Current Pull Request
         uses: jwalton/gh-find-current-pr@v1.3.0
