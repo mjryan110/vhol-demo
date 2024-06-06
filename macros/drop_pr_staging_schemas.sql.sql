@@ -3,13 +3,13 @@
     {% set pr_cleanup_query %}
         with pr_staging_schemas as (
             select schema_name
-            from postgres.information_schema.schemata -- TODO: replace "demo" with your production database
+            from postgres.information_schema.schemata -- TODO: replace "demo" with your production database - done
             where
             schema_name like 'PR_NUM_'||{{ PR_number }}||'%'
         )
 
         select 
-            'drop schema postgres.'||schema_name||';' as drop_command  -- TODO: replace "demo" with your production database
+            'drop schema postgres.'||schema_name||';' as drop_command  -- TODO: replace "demo" with your production database - done
         from pr_staging_schemas
     {% endset %}
 

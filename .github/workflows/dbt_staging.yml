@@ -29,14 +29,14 @@ jobs:
       - name: install requirements
         run: pip install -q -r requirements.txt
 
-      # - name: dbt deps
-      #   run: dbt deps
+      - name: dbt deps
+        run: dbt deps
 
       - name: Find Current Pull Request
         uses: jwalton/gh-find-current-pr@v1.3.0
         id: findPR
 
-      # TODO: update for your unique S3 bucket name
+      # TODO: update for your unique S3 bucket name - done, not using S3
       # TODO: update your GitHub secrets to include AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
       # - name: Grab production manifest from S3
       #   run: |
@@ -48,12 +48,12 @@ jobs:
 
       - name: dbt build
         run: dbt build --select state:modified+ --defer --state ./ --exclude config.materialized:snapshot --profiles-dir ./
-        env: # TODO: update your GitHub secrets to include SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PASSWORD, SNOWFLAKE_ROLE
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-          SNOWFLAKE_SCHEMA: "${{ format('{0}_{1}', 'PR_NUM', steps.findPr.outputs.pr) }}"
+        env: # TODO: update your GitHub secrets to include SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, SNOWFLAKE_PASSWORD, SNOWFLAKE_ROLE - using postgres, what do I do here??
+          # SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          # SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          # SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          # SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+          # SNOWFLAKE_SCHEMA: "${{ format('{0}_{1}', 'PR_NUM', steps.findPr.outputs.pr) }}"
 
       # TODO: comment this step out if you don't have Datafold Cloud yet
       # TODO: replace --ci-config-id 345 with your unique datafold ci config id
@@ -61,7 +61,7 @@ jobs:
         run: |
           set -ex
           datafold dbt upload --ci-config-id 396 --run-type ${DATAFOLD_RUN_TYPE} --commit-sha ${GIT_SHA}
-        env: # TODO: update your GitHub secrets to include DATAFOLD_APIKEY
+        env: # TODO: update your GitHub secrets to include DATAFOLD_APIKEY - done
           DATAFOLD_APIKEY: ${{ secrets.DATAFOLD_APIKEY }}
           DATAFOLD_RUN_TYPE: "${{ 'pull_request' }}"
           GIT_SHA: "${{ github.event.pull_request.head.sha }}"
